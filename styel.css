@@ -1,0 +1,175 @@
+* {
+    padding:0;
+    margin:0;
+}
+.center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+header {
+    background-color: rgba(35, 28, 26, 0); /* 保持透明 */
+    height: 80px;
+    width: 100%;       
+    position: fixed;   
+    top: 0;
+    left: 0;           
+    z-index: 100; 
+    text-align: center;
+    line-height: 80px; 
+}
+
+main {
+    /* 核心修改：統一背景顏色為 #aaeca4 */
+    background-color: #aaeca4; 
+    color: #232d29;            /* 修正：淺綠底配深色字才看得清 */
+    font-size: 16px; 
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    justify-content: center; 
+    
+    padding-top: 100px;     
+    padding-bottom: 40px;   
+    min-height: calc(100vh - 60px); 
+    box-sizing: border-box;    
+}
+
+main h1 {
+    margin-bottom: 25px; 
+    color: #232d29;            /* 統一深色字 */
+}
+
+main input {
+    display: block;
+    width: 260px;        
+    padding: 12px;
+    margin-bottom: 15px; 
+    background-color: #ffffff; /* 輸入框保持白色，方便輸入 */
+    border: 1px solid #7cb577; /* 邊框搭配綠色調 */
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #232d29;
+}
+
+main button {
+    display: block;
+    width: 260px;        
+    padding: 12px;
+    background-color: #232d29; /* 搭配深色按鈕做出對比 */
+    color: #aaeca4;            /* 按鈕文字統一使用 #aaeca4 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+footer {
+    background-color:#aaeca4;
+    color:#232d29;             /* 修正：頁尾文字也改深色，否則在綠底上看不見 */
+    height:60px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+/* 訂閱電子報區塊統一色彩 */
+.newsletter {
+    background-color: #aaeca4; /* 核心修改：統一背景顏色為 #aaeca4 */
+    color: #232d29;            /* 修正：文字改深色 */
+    padding: 60px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.newsletter input, .newsletter button {
+    background-color: transparent;
+    color: #232d29;            /* 修正：輸入框與按鈕文字改深色 */
+    border: 1px solid #232d29; /* 修正：邊框改深色 */
+    padding: 10px; 
+    border-radius: 5px;
+}
+.newsletter input {
+    width: 200px;
+    margin-right: 15px;
+    background-color: rgba(255, 255, 255, 0.5); /* 微微白底提升質感 */
+}
+.newsletter button {
+    width: 80px;
+    cursor: pointer;
+    background-color: #232d29; /* 深色按鈕 */
+    color: #aaeca4;            /* 按鈕文字統一使用 #aaeca4 */
+}
+input::placeholder {
+    color: #556660;            /* 修正：提示文字改深，方便閱讀 */
+}
+input:focus {
+    outline: none; 
+    border-color: #232d29; 
+}
+.menu {
+    display:none;
+}
+.content-text {
+    width: 100%;
+    max-width: 800px; 
+    padding-left: 20px; 
+    padding-right: 20px;
+    box-sizing: border-box; 
+}
+
+/* 響應式設計語法 */
+@media screen and (max-width: 768px) {
+    header ul {
+        display:none;
+    }
+    header h1 {
+        position: relative;
+        display: inline-block;
+        font-size: 24px;
+        color: #232d29;        /* 修正：手機版標題也換深色 */
+    }
+    .news h2 {
+        font-size:40px;
+    }
+    .menu {
+        display:block;
+        background-color: transparent;
+        color: #232d29;        /* 修正：手機版漢堡選單按鈕改深色，不然會隱形 */
+        font-size: 35px;
+        position:absolute;
+        top:15px;
+        left:20px;
+        border:none;
+        cursor: pointer;
+    }
+    .shop {
+        flex-direction: column;
+    }
+    .shop img {
+        width:100%;
+    }
+    .info {
+        width:100%;
+        padding:40px 0;
+    }
+    .info h2 {
+        font-size:30px;
+    }
+    .product {
+        flex-direction: column;
+        padding: 60px 0;
+    }
+    .product div {
+        margin-bottom: 30px;
+    }
+    img {
+        max-width: 100%; 
+        height: auto;    
+    }
+}
