@@ -39,7 +39,7 @@ header h1 {
     /* 1. 套用剛剛引入的 Google 藝術字體（你可以把 Permanent Marker 換成 Black Ops One 看看不同效果） */
     font-family: 'Permanent Marker', cursive !important;
     
-    font-size: 50px !important;       /* 稍微加大藝術字體 */
+    font-size: 45px !important;       /* 稍微加大藝術字體 */
     padding-left: 80px !important;    /* 保持你剛剛調整的向右微移距離 */
     display: inline-block !important; 
     line-height: 80px !important;
