@@ -5,6 +5,11 @@
     box-sizing: border-box !important; 
 }
 
+/* 建立全域基礎響應式字級：根字體大小在 14px 到 16px 之間隨螢幕大小流暢微調 */
+html {
+    font-size: clamp(14px, 0.85rem + 0.4vw, 16px) !important;
+}
+
 /* 關鍵 2：全域強行鎖定！命令瀏覽器只要發現有內容超出手機右側螢幕，一律自動剪裁（隱藏） */
 /* 這能瞬間斬斷所有因為隱藏元件或動畫導致的右側留白與左右晃動問題 */
 html, body {
@@ -39,8 +44,9 @@ header h1 {
     /* 1. 套用剛剛引入的 Google 藝術字體（你可以把 Permanent Marker 換成 Black Ops One 看看不同效果） */
     font-family: 'Permanent Marker', cursive !important;
     
-    font-size: 45px !important;       /* 稍微加大藝術字體 */
-    padding-left: 80px !important;    /* 保持你剛剛調整的向右微移距離 */
+    /* 修正：標題文字流體化，電腦版最大 2.8rem (約45px)，手機版隨螢幕寬度自動縮小 */
+    font-size: clamp(1.8rem, 5vw, 2.8rem) !important;       
+    padding-left: clamp(20px, 5vw, 80px) !important;    /* 靠左微調距離隨螢幕流動 */
     display: inline-block !important; 
     line-height: 80px !important;
 
@@ -59,7 +65,7 @@ header h1 {
 main {
     background-color: #1a1f1a; 
     color: #232d29;            
-    font-size: 12px; 
+    font-size: 1rem !important; /* 修改：基於 html 根節點自動彈性縮放 */
     width: 100%;
     
     display: flex !important;
@@ -88,6 +94,7 @@ main input {
     border-radius: 5px;
     box-sizing: border-box;
     color: #232d29;
+    font-size: 0.95rem !important; /* 修改：輸入框文字大小自適應 */
 }
 
 main button {
@@ -107,7 +114,7 @@ main button {
     border: none;
     border-radius: 5px;
     cursor: pointer !important;    /* 確保滑鼠移上去時一樣會出現小手圖標 */
-    font-size: 14px;               
+    font-size: 1rem !important;    /* 修改：按鈕文字大小自適應 */           
     font-weight: bold;
     box-sizing: border-box;        
 }
@@ -136,7 +143,7 @@ main button {
 /* 標題：博彩要有節制 */
 .disclaimer h3 {
     color: #4b8df8 !important;           /* 完美還原圖片中的亮深藍色 */
-    font-size: 15px !important;          /* 標題稍微放大 */
+    font-size: 0.95rem !important;       /* 修改：警告標題大小自適應 */   
     font-weight: bold !important;
     margin-bottom: 8px !important;       /* 與下方內文拉開距離 */
 }
@@ -144,7 +151,7 @@ main button {
 /* 內文細則 */
 .disclaimer p {
     color: #4b8df8 !important;           /* 全域統一馬會藍色 */
-    font-size: 13px !important;          /* 完美重現圖片中的精細字級 */
+    font-size: 0.85rem !important;       /* 修改：免責條款細則自適應，確保手機極易閱讀 */  
     line-height: 1.5 !important;         /* 1.5倍行高，確保多行文字不擠壓 */
     margin-bottom: 4px !important;       /* 段落間的微小留白 */
     font-weight: 500 !important;
@@ -152,7 +159,8 @@ main button {
 main h2 {
     margin-bottom: 10px; 
     color: #fdfcfc;            
-    font-size: 40px        
+    /* 修正：註冊帳號大標題流體化，電腦版最大 40px，小手機自動縮小 */
+    font-size: clamp(1.5rem, 4vw, 2.5rem) !important;       
 }
 
 /* 核心改造：完美重現圖片中的手機版底部功能導航列 */
@@ -181,19 +189,21 @@ footer div, footer a {
     justify-content: center;
     color: #333333;             /* 圖片中的深灰色字體 */
     text-decoration: none;
-    font-size: 12px;            /* 文字大小 */
-    font-weight: 500;
+    font-size: 0.78rem !important; /* 修改：嚴格限制小字大小，防止手機版擠壓換行錯位 */
+    font-weight: bold;
     width: 20%;                 /* 五個按鈕各佔 20% */
     cursor: pointer;
 }
 
 /* 核心修正：強制固定底部導航列圖片與圖標的大小 */
 footer img, footer i {
-    width: 26px !important;       /* 1. 強制固定寬度為 26 像素 */
-    height: 26px !important;      /* 2. 強制固定高度為 26 像素 */
-    min-width: 26px !important;   /* 3. 新增：鎖定最小寬度，防止手機版擠壓變形 */
-    min-height: 26px !important;  /* 4. 新增：鎖定最小高度 */
-    margin-bottom: 5px !important; /* 圖標與下方文字的間距 */
+    /* 透過 clamp 將圖標極限控制在 24px 到 28px 之間，在電腦螢幕上絕不暴肥變形 */
+    font-size: clamp(24px, 2vw, 28px) !important;
+    width: clamp(24px, 2vw, 28px) !important;       
+    height: clamp(24px, 2vw, 28px) !important;      
+    min-width: 24px !important;   /* 鎖定最小寬高，防止極窄手機擠壓 */
+    min-height: 24px !important;  
+    margin-bottom: 4px !important; /* 圖標與下方文字的間距 */
     object-fit: contain !important; /* 確保圖標依比例縮放、不扁塌拉伸 */
     display: block !important;
 }
@@ -251,17 +261,18 @@ input:focus {
     header h1 {
         position: relative;
         display: inline-block;
-        font-size: 24px;
+        /* 手機版「WillWin」藝術字大小，與螢幕寬度更彈性契合 */
+        font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
         color: #232d29;        
     }
     .news h2 {
-        font-size:40px;
+        font-size: 2.2rem !important; /* 修改為相對字級縮放 */
     }
     .menu {
         display:block;
         background-color: transparent;
         color: #ffed4b;        
-        font-size: 35px;
+        font-size: 32px; /* 稍微縮小手機選單圖標 */
         position:absolute;
         top:15px;
         left:20px;
@@ -279,7 +290,7 @@ input:focus {
         padding:40px 0;
     }
     .info h2 {
-        font-size:30px;
+        font-size: 1.8rem !important; /* 修改為相對字級縮放 */
     }
     .product {
         flex-direction: column;

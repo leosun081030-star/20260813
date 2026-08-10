@@ -1,16 +1,20 @@
+/* ==========================================================================
+   全域初始化與防溢出安全機制
+   ========================================================================== */
 * {
     padding: 0;
     margin: 0;
-    /* 關鍵 1：防止內襯（padding）與邊框（border）撐大原本設定的 100% 寬度 */
     box-sizing: border-box !important; 
 }
 
-/* 關鍵 2：全域強行鎖定！命令瀏覽器只要發現有內容超出手機右側螢幕，一律自動剪裁（隱藏） */
-/* 這能瞬間斬斷所有因為隱藏元件或動畫導致的右側留白與左右晃動問題 */
+html {
+    font-size: clamp(14px, 0.85rem + 0.4vw, 16px) !important;
+}
+
 html, body {
     width: 100% !important;
     max-width: 100% !important;
-    overflow-x: hidden !important; /* 核心防線：強行禁止橫向水平捲動 */
+    overflow-x: hidden !important; 
 }
 
 .center-img {
@@ -19,24 +23,22 @@ html, body {
     transform: scale(1.2) !important; 
     clip-path: inset(10% 15% 23% 15% round 12px); 
 }
-/* 1. 圖片外層容器：開啟 Flexbox 並排魔法 */
+
 .image-row {
     display: flex !important;
-    justify-content: center !important; /* 讓兩張圖片在網頁中間置中 */
-    gap: 15px !important;              /* 設定兩張圖片之間的左右間距 */
-    width: 340px !important;           /* 讓整組圖片寬度與你的輸入框、按鈕一模一樣長 */
-    max-width: 90% !important;         /* 確保手機版不破圖 */
-    margin: 20px auto !important;      /* 上下保留 20px 間距，並水平居中 */
+    justify-content: center !important; 
+    gap: 15px !important;              
+    width: 340px !important;           
+    max-width: 90% !important;         
+    margin: 20px auto !important;      
     box-sizing: border-box !important;
 }
 
-/* 2. 核心修正：強制讓內部兩張圖片大小一模一樣 */
 .image-row img {
-    /* 關鍵：利用 calc 計算，扣掉 gap 間距後，兩張圖嚴格各佔一半（50%）空間 */
     width: calc(50% - 7.5px) !important; 
-    height: 120px !important;          /* 強制兩張圖片維持一模一樣的固定高度（數值可自由微調） */
-    object-fit: cover !important;      /* 核心：保證圖片填滿且比例不變形、不拉伸扁塌 */
-    border-radius: 8px !important;     /* 加上精緻的圓角效果 */
+    height: 120px !important;          
+    object-fit: cover !important;      
+    border-radius: 8px !important;     
 }
 
 header {
@@ -48,57 +50,44 @@ header {
     left: 0 !important;           
     right: 0 !important;
     z-index: 100; 
-    
-    /* 修正：將原本的 center 改為 left，讓內部的文字預設靠左排列 */
     text-align: left !important;
     line-height: 80px; 
 }
 
 header h1 {
-    /* 1. 套用剛剛引入的 Google 藝術字體（你可以把 Permanent Marker 換成 Black Ops One 看看不同效果） */
     font-family: 'Permanent Marker', cursive !important;
-    
-    font-size: 45px !important;       /* 稍微加大藝術字體 */
-    padding-left: 80px !important;    /* 保持你剛剛調整的向右微移距離 */
+    font-size: clamp(1.8rem, 5vw, 2.8rem) !important;       
+    padding-left: clamp(20px, 5vw, 80px) !important;    
     display: inline-block !important; 
     line-height: 80px !important;
-
-    /* 2. 核心魔法：將字體變為黃綠色漸層藝術字（呼應馬會 App 圖片風格） */
     background: linear-gradient(135deg, #ffed4b 0%, #66c475 100%) !important;
-    -webkit-background-clip: text !important; /* 將背景色裁切鎖定在文字形狀內 */
-    -webkit-text-fill-color: transparent !important; /* 讓原本的死板單色變透明，露出底下的華麗漸層 */
-
-    /* 3. 特效點綴：加入一圈精緻的深色黑影，讓藝術字在透明 header 上立體浮出、完全不隱形 */
+    -webkit-background-clip: text !important; 
+    -webkit-text-fill-color: transparent !important; 
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
-    
-    /* 讓字體自帶微微傾斜的動感（可自由拔除） */
     font-style: italic !important; 
 }
 
 main {
     background-color: #1a1f1a; 
     color: #232d29;            
-    font-size: 12px; 
+    font-size: 1rem !important; 
     width: 100%;
-    
     display: flex !important;
     flex-direction: column !important; 
     align-items: center !important;    
     justify-content: flex-start !important; 
-    
     padding-top: 40px !important;     
-    /* 修正：底部必須留出 80px 空間，避免內容被固定在底部的 footer 遮擋 */
     padding-bottom: 80px !important;   
     min-height: calc(100vh - 75px); 
     box-sizing: border-box;
     text-align: left !important;    
 }
+
 main input {
     display: block !important;
     margin-left: auto !important;
     margin-right: auto !important;
     margin-bottom: 15px; 
-    
     width: 340px !important;        
     max-width: 90% !important;     
     padding: 12px;
@@ -107,6 +96,7 @@ main input {
     border-radius: 5px;
     box-sizing: border-box;
     color: #232d29;
+    font-size: 0.95rem !important; 
 }
 
 main button {
@@ -115,108 +105,101 @@ main button {
     margin-right: auto !important;
     margin-top: 15px !important;   
     margin-bottom: 0 !important;
-    
     width: 340px !important;        
     max-width: 90% !important;     
     padding: 12px;
-    
     background-color: #ffed4b !important; 
     color: #1a1f1a !important;            
-    
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;               
+    font-size: 1rem !important;                  
     font-weight: bold;
     box-sizing: border-box;        
 }
 .disclaimer {
-    width: 340px !important;              /* 寬度與上方的輸入框、按鈕完全對齊 */
-    max-width: 90% !important;           /* 確保在小手機上不超出螢幕 */
-    margin: 30px auto 0 auto !important; /* 與上方按鈕拉開 30px 的舒適微距 */
-    text-align: left !important;         /* 完美還原圖片中的靠左對齊 */
+    width: 340px !important;              
+    max-width: 90% !important;           
+    margin: 30px auto 0 auto !important; 
+    text-align: left !important;         
     box-sizing: border-box !important;
 }
+
 @media screen and (min-width: 0px) {
-    /* 由於不想動結構，我們必須在 main 內部加上一個小技巧，
-       如果你未來的文字是用小標籤（例如 <span> 或文字本身），
-       可以直接讓 main 的 color 作用範圍做出區隔。 
-       
-       不過，最保險、最不需要動結構的純 CSS 寫法，是將 input 本身利用 margin 的推擠，
-       但在不安裝新標籤的情況下，文字會直接貼在最左邊。
-       為了讓「文字」與「輸入框」在正中央一起對齊，以下是純 CSS 唯一解： */
-       
-    main {
-        /* 將對齊點換個方式，讓內部所有東西向左看齊 */
-        align-items: center !important; 
-    }
-}
-/* 標題：博彩要有節制 */
-.disclaimer h3 {
-    color: #4b8df8 !important;           /* 完美還原圖片中的亮深藍色 */
-    font-size: 15px !important;          /* 標題稍微放大 */
-    font-weight: bold !important;
-    margin-bottom: 8px !important;       /* 與下方內文拉開距離 */
+    main { align-items: center !important; }
 }
 
-/* 內文細則 */
+.disclaimer h3 {
+    color: #4b8df8 !important;           
+    font-size: 0.95rem !important;                 
+    font-weight: bold !important;
+    margin-bottom: 8px !important;       
+}
+
 .disclaimer p {
-    color: #4b8df8 !important;           /* 全域統一馬會藍色 */
-    font-size: 13px !important;          /* 完美重現圖片中的精細字級 */
-    line-height: 1.5 !important;         /* 1.5倍行高，確保多行文字不擠壓 */
-    margin-bottom: 4px !important;       /* 段落間的微小留白 */
+    color: #4b8df8 !important;           
+    font-size: 0.85rem !important;                 
+    line-height: 1.5 !important;         
+    margin-bottom: 4px !important;       
     font-weight: 500 !important;
 }
+
 main h2 {
     margin-bottom: 10px; 
     color: #fdfcfc;            
-    font-size: 30px        
+    font-size: clamp(1.5rem, 4vw, 2.5rem) !important;        
 }
 
-/* 核心改造：完美重現圖片中的手機版底部功能導航列 */
 footer {
-    position: fixed;            /* 固定在螢幕最底部，不隨網頁滾動 */
+    position: fixed;            
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 75px;               /* 調整高度以容納圖標與文字 */
-    background-color: #ffffff;  /* 白色背景 */
-    border-top: 1px solid #e0e0e0; /* 頂部的淺灰色細分界線 */
+    height: 75px;               
+    background-color: #ffffff;  
+    border-top: 1px solid #e0e0e0; 
     display: flex !important;   
-    justify-content: space-around; /* 五個按鈕平均分配橫向空間 */
+    justify-content: space-around; 
     align-items: center;
-    z-index: 999;               /* 確保永遠在最上層 */
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.05); /* 微弱的上方陰影提升質感 */
-    padding-bottom: env(safe-area-inset-bottom); /* 適應 iPhone 等全面屏底部的安全區域 */
+    z-index: 999;               
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05); 
+    padding-bottom: env(safe-area-inset-bottom); 
     box-sizing: border-box;
 }
 
-/* 底部導航列中的每一個獨立按鈕按鈕（需要包裹圖標與文字） */
 footer div, footer a {
     display: flex;
-    flex-direction: column;     /* 讓圖標在上、文字在下排列 */
+    flex-direction: column;     
     align-items: center;
     justify-content: center;
-    color: #333333;             /* 圖片中的深灰色字體 */
+    color: #333333;             
     text-decoration: none;
-    font-size: 12px;            /* 文字大小 */
-    font-weight: 500;
-    width: 20%;                 /* 五個按鈕各佔 20% */
+    font-size: 0.78rem !important; 
+    font-weight: bold;
+    width: 20%;                 
     cursor: pointer;
 }
 
-/* 核心修正：強制固定底部導航列圖片與圖標的大小 */
-footer img, footer i {
-    width: 26px !important;       /* 1. 強制固定寬度為 26 像素 */
-    height: 26px !important;      /* 2. 強制固定高度為 26 像素 */
-    min-width: 26px !important;   /* 3. 新增：鎖定最小寬度，防止手機版擠壓變形 */
-    min-height: 26px !important;  /* 4. 新增：鎖定最小高度 */
-    margin-bottom: 5px !important; /* 圖標與下方文字的間距 */
-    object-fit: contain !important; /* 確保圖標依比例縮放、不扁塌拉伸 */
+footer img, footer i, .nav-icon {
+    font-size: clamp(24px, 2vw, 28px) !important;
+    width: clamp(24px, 2vw, 28px) !important;       
+    height: clamp(24px, 2vw, 28px) !important;      
+    min-width: 24px !important;   
+    min-height: 24px !important;  
+    margin-bottom: 4px !important; 
+    object-fit: contain !important; 
     display: block !important;
+    line-height: 1 !important;
+    text-align: center !important;
 }
 
-/* 訂閱電子報區塊統一色彩 */
+.nav-text {
+    font-size: 0.75rem !important; 
+    color: #444444 !important;
+    display: block !important;
+    text-align: center !important;
+}
+
 .newsletter {
     background-color: #1a1f1a; 
     color: #ffed4b;            
@@ -225,6 +208,7 @@ footer img, footer i {
     flex-direction: column;
     align-items: center;
 }
+
 .newsletter input, .newsletter button {
     background-color: transparent;
     color: #020202;            
@@ -232,27 +216,24 @@ footer img, footer i {
     padding: 10px; 
     border-radius: 5px;
 }
+
 .newsletter input {
     width: 200px;
     margin-right: 15px;
     background-color: rgba(249, 250, 249, 0.5); 
 }
+
 .newsletter button {
     width: 80px;
     cursor: pointer;
     background-color: #ffed4b; 
     color: #ffffff;            
 }
-input::placeholder {
-    color: #556660;            
-}
-input:focus {
-    outline: none; 
-    border-color: #232d29; 
-}
-.menu {
-    display:none;
-}
+
+input::placeholder { color: #556660; }
+input:focus { outline: none; border-color: #232d29; }
+.menu { display: none; }
+
 .content-text {
     width: 100%;
     max-width: 800px; 
@@ -261,247 +242,175 @@ input:focus {
     box-sizing: border-box; 
 }
 
-/* 響應式設計語法 */
 @media screen and (max-width: 768px) {
-    header ul {
-        display:none;
-    }
+    header ul { display: none; }
     header h1 {
         position: relative;
         display: inline-block;
-        font-size: 24px;
+        font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
         color: #232d29;        
     }
-    .news h2 {
-        font-size:40px;
-    }
+    .news h2 { font-size: 2.2rem !important; }
     .menu {
-        display:block;
+        display: block;
         background-color: transparent;
         color: #ffed4b;        
-        font-size: 35px;
-        position:absolute;
-        top:15px;
-        left:20px;
-        border:none;
+        font-size: 32px;
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        border: none;
         cursor: pointer;
     }
-    .shop {
-        flex-direction: column;
-    }
-    .shop img {
-        width:100%;
-    }
-    .info {
-        width:100%;
-        padding:40px 0;
-    }
-    .info h2 {
-        font-size:30px;
-    }
-    .product {
-        flex-direction: column;
-        padding: 60px 0;
-    }
-    .product div {
-        margin-bottom: 30px;
-    }
-    /* 修正手機版通用圖片縮放，但不影響 footer 的圖標 */
-    main img {
-        max-width: 100%; 
-        height: auto;    
-    }
+    .shop { flex-direction: column; }
+    .shop img { width: 100%; }
+    .info { width: 100%; padding: 40px 0; }
+    .info h2 { font-size: 1.8rem !important; }
+    .product { flex-direction: column; padding: 60px 0; }
+    .product div { margin-bottom: 30px; }
+    main img { max-width: 100%; height: auto; }
 }
-/* ==========================================================================
-   全新投注介面專屬樣式（重現馬會 App 核心視覺）
-   ========================================================================== */
 
-/* 1. 投注外層卡片容器 */
 .betting-card {
-    width: 340px !important;              /* 與你的輸入框、按鈕寬度嚴格對齊 */
-    max-width: 90% !important;            /* 防止手機版破圖 */
-    background-color: #232a23 !important; /* 採用略帶綠意的深灰色，與大背景區隔 */
-    border: 1px solid #334433 !important; /* 精緻的深綠色細邊框 */
-    border-radius: 12px !important;       /* 舒適的現代化圓角 */
+    width: 340px !important;              
+    max-width: 90% !important;            
+    background-color: #232a23 !important; 
+    border: 1px solid #334433 !important; 
+    border-radius: 12px !important;       
     padding: 16px !important;
-    margin: 20px auto !important;         /* 水平置中，上下保留間距 */
+    margin: 20px auto !important;         
     box-sizing: border-box !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important; /* 增加立體陰影 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important; 
 }
 
-/* 2. 卡片頂部資訊列 */
 .bet-header {
     display: flex !important;
-    justify-content: space-between !important; /* 左右分開對齊 */
+    justify-content: space-between !important; 
     align-items: center !important;
     margin-bottom: 10px !important;
 }
 
-/* 體育項目標籤 */
 .sport-tag {
-    background-color: #66c475 !important; /* 馬會經典綠色 */
-    color: #1a1f1a !important;            /* 深色字體確保清晰度 */
-    font-size: 11px !important;
+    background-color: #66c475 !important; 
+    color: #1a1f1a !important;            
+    font-size: 0.75rem !important; 
     font-weight: bold !important;
     padding: 2px 8px !important;
     border-radius: 4px !important;
 }
 
-/* 開賽時間 */
-.match-time {
-    color: #889a88 !important;            /* 低調的灰綠色時間字體 */
-    font-size: 12px !important;
-}
+.match-time { color: #889a88 !important; font-size: 0.8rem !important; }
 
-/* 3. 賽事隊伍名稱 */
 .match-title {
-    color: #ffffff !important;            /* 純白色突出焦點 */
-    font-size: 18px !important;
+    color: #ffffff !important;            
+    font-size: clamp(1.1rem, 3vw, 1.3rem) !important; 
     font-weight: bold !important;
     margin-bottom: 16px !important;
-    text-align: center !important;         /* 隊伍名稱置中對齊 */
+    text-align: center !important;         
 }
 
-/* 4. 賠率按鈕並排橫列 */
 .odds-row {
     display: flex !important;
-    justify-content: space-between !important; /* 三個按鈕平均橫向分配 */
-    gap: 8px !important;                  /* 按鈕之間的間距 */
+    justify-content: space-between !important; 
+    gap: 8px !important;                  
     width: 100% !important;
 }
 
-/* 5. 獨立賠率按鈕設定 */
 .odds-btn {
     display: flex !important;
-    flex-direction: column !important;     /* 強制讓「主勝」在上、「賠率」在下排列 */
+    flex-direction: column !important;     
     align-items: center !important;
     justify-content: center !important;
-    
-    width: calc(33.33% - 5.3px) !important; /* 精確計算，完美均分三等份 */
-    height: 54px !important;               /* 固定按鈕高度 */
-    background-color: #2e3b2e !important;  /* 按鈕未點擊時的暗綠色底 */
-    border: 1px solid #445544 !important;  /* 綠色細邊框 */
+    width: calc(33.33% - 5.3px) !important; 
+    height: 54px !important;               
+    background-color: #2e3b2e !important;  
+    border: 1px solid #445544 !important;  
     border-radius: 6px !important;
     cursor: pointer !important;
     box-sizing: border-box !important;
-    transition: all 0.2s ease !important;  /* 增加流暢的滑鼠懸停動畫 */
+    transition: all 0.2s ease !important;  
 }
 
-/* 賠率按鈕文字：上方標籤 */
-.odds-label {
-    color: #a0b0a0 !important;            /* 淺灰綠色文字 */
-    font-size: 11px !important;
-    margin-bottom: 2px !important;
+.odds-label { color: #a0b0a0 !important; 
+font-size: 0.75rem !important; 
+margin-bottom: 2px !important; 
+}
+.odds-num { color: #ffed4b !important; 
+font-size: clamp(0.9rem, 2vw, 1.05rem) !important; 
+font-weight: bold !important; 
 }
 
-/* 賠率按鈕文字：下方數字 */
-.odds-num {
-    color: #ffed4b !important;            /* 馬會經典耀眼黃色賠率數字 */
-    font-size: 15px !important;
-    font-weight: bold !important;
+.odds-btn:hover { background-color: #66c475 !important; 
+border-color: #66c475 !important; 
 }
-
-/* 6. 互動效果：當滑鼠懸停（Hover）或手指點擊時，按鈕變成高亮亮綠色 */
-.odds-btn:hover {
-    background-color: #66c475 !important;
-    border-color: #66c475 !important;
+.odds-btn:hover .odds-label, .odds-btn:hover .odds-num { color: #1a1f1a !important; 
 }
-.odds-btn:hover .odds-label {
-    color: #1a1f1a !important;            /* 變色後字體自適應換成深色 */
-}
-.odds-btn:hover .odds-num {
-    color: #1a1f1a !important;
-}
-/* ==========================================================================
-   全新底部滑出投注單樣式
-   ========================================================================== */
 
 .bet-slip {
     position: fixed !important;
-    bottom: -300px;             /* 預設藏在螢幕下方 300px 外 */
+    bottom: -300px;             
     left: 0 !important;
     width: 100% !important;
-    background-color: #232a23 !important; /* 深綠黑底色 */
-    border-top: 3px solid #ffed4b !important; /* 頂部黃色醒目邊框 */
-    border-radius: 16px 16px 0 0 !important; /* 上方圓角 */
+    background-color: #232a23 !important; 
+    border-top: 3px solid #ffed4b !important; 
+    border-radius: 16px 16px 0 0 !important; 
     padding: 16px !important;
-    padding-bottom: calc(75px + env(safe-area-inset-bottom)) !important; /* 確保不被底部 footer 遮擋 */
+    padding-bottom: calc(75px + env(safe-area-inset-bottom)) !important; 
     box-sizing: border-box !important;
-    z-index: 998 !important;    /* 層級略低於 footer (999) */
+    z-index: 998 !important;    
     box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5) !important;
-    transition: bottom 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important; /* 絲滑滑出動畫 */
+    transition: bottom 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important; 
 }
 
-/* 當啟用這個 class 時，投注單會向上滑出 */
-.bet-slip.active {
-    bottom: 0 !important;
+.bet-slip.active { bottom: 0 !important; }
+.bet-slip-header { display: flex !important;
+justify-content: space-between !important; 
+align-items: center !important; 
+margin-bottom: 15px !important; 
+color: #ffed4b !important;
 }
-
-.bet-slip-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    margin-bottom: 15px !important;
-    color: #ffed4b !important;
+.bet-slip-header h4 { font-size: 1.05rem !important; 
+font-weight: bold !important; 
 }
-
-.bet-slip-header h4 {
-    font-size: 16px !important;
-    font-weight: bold !important;
+.close-slip-btn { background: none !important; 
+border: none !important; 
+color: #889a88 !important; 
+font-size: 1.2rem !important; 
+cursor: pointer !important; 
 }
-
-.close-slip-btn {
-    background: none !important;
-    border: none !important;
-    color: #889a88 !important;
-    font-size: 18px !important;
-    cursor: pointer !important;
+.bet-info { background-color: #1a1f1a !important; 
+padding: 12px !important; 
+border-radius: 6px !important; 
+margin-bottom: 15px !important; 
+text-align: left !important; 
 }
-
-.bet-info {
-    background-color: #1a1f1a !important;
-    padding: 12px !important;
-    border-radius: 6px !important;
-    margin-bottom: 15px !important;
-    text-align: left !important;
+.bet-match { color: #889a88 !important; 
+font-size: 0.8rem !important; 
+margin-bottom: 4px !important; 
 }
-
-.bet-match {
-    color: #889a88 !important;
-    font-size: 12px !important;
-    margin-bottom: 4px !important;
+.bet-selection { color: #ffffff !important; 
+font-size: 1rem !important; 
+font-weight: bold !important; 
 }
-
-.bet-selection {
-    color: #ffffff !important;
-    font-size: 15px !important;
-    font-weight: bold !important;
+.bet-input-row { display: flex !important; 
+gap: 10px !important; 
+width: 100% !important; 
 }
-
-.bet-input-row {
-    display: flex !important;
-    gap: 10px !important;
-    width: 100% !important;
+#betAmount { flex: 1 !important; 
+background-color: #ffffff !important; 
+border: 1px solid #1a1f1a !important; 
+padding: 10px !important; 
+border-radius: 6px !important; 
+font-size: 0.95rem !important; 
+color: #1a1f1a !important; 
+margin: 0 !important; 
 }
-
-#betAmount {
-    flex: 1 !important;
-    background-color: #ffffff !important;
-    border: 1px solid #1a1f1a !important;
-    padding: 10px !important;
-    border-radius: 6px !important;
-    font-size: 14px !important;
-    color: #1a1f1a !important;
-    margin: 0 !important; /* 取消先前全域的置中 */
-}
-
-.submit-bet-btn {
-    background-color: #ffed4b !important;
-    color: #1a1f1a !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    border-radius: 6px !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    cursor: pointer !important;
+.submit-bet-btn { background-color: #ffed4b !important; 
+color: #1a1f1a !important; 
+border: none !important; 
+padding: 10px 20px !important; 
+border-radius: 6px !important; 
+font-size: 0.95rem !important; 
+font-weight: bold !important; 
+cursor: pointer !important; 
 }
