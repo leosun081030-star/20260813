@@ -4,11 +4,20 @@
 }
 .center-img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    
+    /* 核心修改 1：設定外邊距。上方留白 40px，左右自動置中，下方保留 20px 間距 */
+    margin: 40px auto 20px auto !important; 
+    
+    /* 核心修改 2：適度微調放大倍率 */
+    /* 原本的 1.5 放大得太誇張會強行貼頂，改為 1.2 或 1.3 能在保留球場的同時維持頂部留白 */
+    transform: scale(1.2) !important; 
+    
+    /* 保持你原本的局部裁剪設定 */
+    clip-path: inset(10% 15% 23% 15% round 12px); 
 }
+
 header {
-    background-color: rgba(35, 28, 26, 0); /* 保持透明 */
+    background-color: rgba(102, 196, 117, 0.452); /* 保持透明 */
     height: 80px;
     width: 100%;       
     position: fixed;   
@@ -18,59 +27,80 @@ header {
     text-align: center;
     line-height: 80px; 
 }
-
+header h1{
+    font-size: 50px
+}
 main {
-    /* 核心修改：統一背景顏色為 #aaeca4 */
-    background-color: #aaeca4; 
-    color: #232d29;            /* 修正：淺綠底配深色字才看得清 */
+    /* 核心修改：背景顏色再調深調黑 */
+    background-color: #1a1f1a; 
+    color: #232d29;            
     font-size: 16px; 
     width: 100%;
     
-    display: flex;
-    flex-direction: column; 
-    align-items: center;    
-    justify-content: center; 
+    /* 強制啟用直向 Flex 排版，並解除中央鎖定（改為 flex-start） */
+    display: flex !important;
+    flex-direction: column !important; 
+    align-items: center !important;    
+    justify-content: flex-start !important; 
     
-    padding-top: 100px;     
+    /* 調整這裡：從 100px 縮小到 40px，讓輸入框明顯往上調 */
+    padding-top: 40px !important;     
     padding-bottom: 40px;   
     min-height: calc(100vh - 60px); 
     box-sizing: border-box;    
 }
-
-main h1 {
-    margin-bottom: 25px; 
-    color: #232d29;            /* 統一深色字 */
-}
-
 main input {
-    display: block;
-    width: 260px;        
+    /* 修正：強制升格區塊，並利用左右 auto 在 main 裡面強行居中 */
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 15px; /* 保持原有的欄位間距 */
+    
+    width: 340px !important;        
+    max-width: 90% !important;     /* 防止手機版變形 */
     padding: 12px;
-    margin-bottom: 15px; 
-    background-color: #ffffff; /* 輸入框保持白色，方便輸入 */
-    border: 1px solid #7cb577; /* 邊框搭配綠色調 */
+    background-color: #ffffff; 
+    border: 1px solid #1a1f1a;     
     border-radius: 5px;
     box-sizing: border-box;
     color: #232d29;
 }
 
 main button {
-    display: block;
-    width: 260px;        
+    display: block !important;
+    
+    /* 核心修正：加入 !important 的左右 auto，強行將按鈕拉回與輸入框一模一樣的中軸線上 */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 15px !important;   /* 保持與上方輸入框的間距 */
+    margin-bottom: 0 !important;
+    
+    width: 340px !important;        
+    max-width: 90% !important;     /* 確保在小手機上不超出螢幕 */
     padding: 12px;
-    background-color: #232d29; /* 搭配深色按鈕做出對比 */
-    color: #aaeca4;            /* 按鈕文字統一使用 #aaeca4 */
+    
+    /* 保持原有的黃底黑字設定 */
+    background-color: #ffed4b !important; 
+    color: #1a1f1a !important;            
+    
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 12px;
-    margin-top: 10px;
+    font-size: 14px;               
     font-weight: bold;
+    box-sizing: border-box;        
+}
+
+main h2 {
+    margin-bottom: 10px; 
+    color: #fdfcfc;            /* 統一深色字 */
+    font-size: 40px        
 }
 
 footer {
-    background-color:#aaeca4;
-    color:#232d29;             /* 修正：頁尾文字也改深色，否則在綠底上看不見 */
+    /* 核心修改：頁尾同步變黑 */
+    background-color:#1a1f1a;
+    color:#7a8a7a;             /* 修正：深黑底配灰綠色字，低調且清晰 */
     height:60px;
     display:flex;
     justify-content: center;
@@ -80,8 +110,9 @@ footer {
 
 /* 訂閱電子報區塊統一色彩 */
 .newsletter {
-    background-color: #aaeca4; /* 核心修改：統一背景顏色為 #aaeca4 */
-    color: #232d29;            /* 修正：文字改深色 */
+    /* 核心修改：訂閱區塊也同步變黑 */
+    background-color: #1a1f1a; 
+    color: #ffed4b;            
     padding: 60px 0;
     display: flex;
     flex-direction: column;
@@ -89,24 +120,24 @@ footer {
 }
 .newsletter input, .newsletter button {
     background-color: transparent;
-    color: #232d29;            /* 修正：輸入框與按鈕文字改深色 */
-    border: 1px solid #232d29; /* 修正：邊框改深色 */
+    color: #020202;            
+    border: 2px solid #232d29; 
     padding: 10px; 
     border-radius: 5px;
 }
 .newsletter input {
     width: 200px;
     margin-right: 15px;
-    background-color: rgba(255, 255, 255, 0.5); /* 微微白底提升質感 */
+    background-color: rgba(249, 250, 249, 0.5); 
 }
 .newsletter button {
     width: 80px;
     cursor: pointer;
-    background-color: #232d29; /* 深色按鈕 */
-    color: #aaeca4;            /* 按鈕文字統一使用 #aaeca4 */
+    background-color: #ffed4b; 
+    color: #ffffff;            
 }
 input::placeholder {
-    color: #556660;            /* 修正：提示文字改深，方便閱讀 */
+    color: #556660;            
 }
 input:focus {
     outline: none; 
@@ -132,7 +163,7 @@ input:focus {
         position: relative;
         display: inline-block;
         font-size: 24px;
-        color: #232d29;        /* 修正：手機版標題也換深色 */
+        color: #232d29;        
     }
     .news h2 {
         font-size:40px;
@@ -140,7 +171,7 @@ input:focus {
     .menu {
         display:block;
         background-color: transparent;
-        color: #232d29;        /* 修正：手機版漢堡選單按鈕改深色，不然會隱形 */
+        color: #ffed4b;        /* 修正：手機版選單按鈕換成耀眼黃色，在黑底上最明顯 */
         font-size: 35px;
         position:absolute;
         top:15px;
