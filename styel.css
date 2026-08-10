@@ -23,22 +23,29 @@ html, body {
 header {
     background-color: rgba(102, 196, 117, 0.452); 
     height: 80px;
-    width: 100% !important;  /* 確保滿版 */
+    width: 100% !important;  
     position: fixed;   
     top: 0;
-    
-    /* 核心修正：強制將固定定位錨定在最左、最右側，不允許任何橫向偏移 */
     left: 0 !important;           
     right: 0 !important;
-    
     z-index: 100; 
-    text-align: center;
+    
+    /* 修正：將原本的 center 改為 left，讓內部的文字預設靠左排列 */
+    text-align: left !important;
     line-height: 80px; 
 }
 
-header h1{
-    font-size: 50px
+header h1 {
+    font-size: 50px;
+    
+    /* 核心修改：為標題加上左邊距，防止文字死死貼在螢幕最左邊邊緣 */
+    /* 20px 的留白在手機和電腦上看都會非常舒適、整齊 */
+    padding-left: 20px !important;
+    
+    /* 確保它是行內區塊，不會霸佔整行空間而把其他按鈕擠下去 */
+    display: inline-block !important; 
 }
+
 main {
     background-color: #1a1f1a; 
     color: #232d29;            
@@ -54,7 +61,8 @@ main {
     /* 修正：底部必須留出 80px 空間，避免內容被固定在底部的 footer 遮擋 */
     padding-bottom: 80px !important;   
     min-height: calc(100vh - 75px); 
-    box-sizing: border-box;    
+    box-sizing: border-box;
+    text-align: left !important;    
 }
 main input {
     display: block !important;
@@ -93,7 +101,43 @@ main button {
     font-weight: bold;
     box-sizing: border-box;        
 }
+.disclaimer {
+    width: 340px !important;              /* 寬度與上方的輸入框、按鈕完全對齊 */
+    max-width: 90% !important;           /* 確保在小手機上不超出螢幕 */
+    margin: 30px auto 0 auto !important; /* 與上方按鈕拉開 30px 的舒適微距 */
+    text-align: left !important;         /* 完美還原圖片中的靠左對齊 */
+    box-sizing: border-box !important;
+}
+@media screen and (min-width: 0px) {
+    /* 由於不想動結構，我們必須在 main 內部加上一個小技巧，
+       如果你未來的文字是用小標籤（例如 <span> 或文字本身），
+       可以直接讓 main 的 color 作用範圍做出區隔。 
+       
+       不過，最保險、最不需要動結構的純 CSS 寫法，是將 input 本身利用 margin 的推擠，
+       但在不安裝新標籤的情況下，文字會直接貼在最左邊。
+       為了讓「文字」與「輸入框」在正中央一起對齊，以下是純 CSS 唯一解： */
+       
+    main {
+        /* 將對齊點換個方式，讓內部所有東西向左看齊 */
+        align-items: center !important; 
+    }
+}
+/* 標題：博彩要有節制 */
+.disclaimer h3 {
+    color: #4b8df8 !important;           /* 完美還原圖片中的亮深藍色 */
+    font-size: 15px !important;          /* 標題稍微放大 */
+    font-weight: bold !important;
+    margin-bottom: 8px !important;       /* 與下方內文拉開距離 */
+}
 
+/* 內文細則 */
+.disclaimer p {
+    color: #4b8df8 !important;           /* 全域統一馬會藍色 */
+    font-size: 13px !important;          /* 完美重現圖片中的精細字級 */
+    line-height: 1.5 !important;         /* 1.5倍行高，確保多行文字不擠壓 */
+    margin-bottom: 4px !important;       /* 段落間的微小留白 */
+    font-weight: 500 !important;
+}
 main h2 {
     margin-bottom: 10px; 
     color: #fdfcfc;            
