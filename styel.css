@@ -4,20 +4,13 @@
 }
 .center-img {
     display: block;
-    
-    /* 核心修改 1：設定外邊距。上方留白 40px，左右自動置中，下方保留 20px 間距 */
     margin: 40px auto 20px auto !important; 
-    
-    /* 核心修改 2：適度微調放大倍率 */
-    /* 原本的 1.5 放大得太誇張會強行貼頂，改為 1.2 或 1.3 能在保留球場的同時維持頂部留白 */
     transform: scale(1.2) !important; 
-    
-    /* 保持你原本的局部裁剪設定 */
     clip-path: inset(10% 15% 23% 15% round 12px); 
 }
 
 header {
-    background-color: rgba(102, 196, 117, 0.452); /* 保持透明 */
+    background-color: rgba(102, 196, 117, 0.452); 
     height: 80px;
     width: 100%;       
     position: fixed;   
@@ -31,33 +24,30 @@ header h1{
     font-size: 50px
 }
 main {
-    /* 核心修改：背景顏色再調深調黑 */
     background-color: #1a1f1a; 
     color: #232d29;            
-    font-size: 16px; 
+    font-size: 12px; 
     width: 100%;
     
-    /* 強制啟用直向 Flex 排版，並解除中央鎖定（改為 flex-start） */
     display: flex !important;
     flex-direction: column !important; 
     align-items: center !important;    
     justify-content: flex-start !important; 
     
-    /* 調整這裡：從 100px 縮小到 40px，讓輸入框明顯往上調 */
     padding-top: 40px !important;     
-    padding-bottom: 40px;   
-    min-height: calc(100vh - 60px); 
+    /* 修正：底部必須留出 80px 空間，避免內容被固定在底部的 footer 遮擋 */
+    padding-bottom: 80px !important;   
+    min-height: calc(100vh - 75px); 
     box-sizing: border-box;    
 }
 main input {
-    /* 修正：強制升格區塊，並利用左右 auto 在 main 裡面強行居中 */
     display: block !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    margin-bottom: 15px; /* 保持原有的欄位間距 */
+    margin-bottom: 15px; 
     
     width: 340px !important;        
-    max-width: 90% !important;     /* 防止手機版變形 */
+    max-width: 90% !important;     
     padding: 12px;
     background-color: #ffffff; 
     border: 1px solid #1a1f1a;     
@@ -68,18 +58,15 @@ main input {
 
 main button {
     display: block !important;
-    
-    /* 核心修正：加入 !important 的左右 auto，強行將按鈕拉回與輸入框一模一樣的中軸線上 */
     margin-left: auto !important;
     margin-right: auto !important;
-    margin-top: 15px !important;   /* 保持與上方輸入框的間距 */
+    margin-top: 15px !important;   
     margin-bottom: 0 !important;
     
     width: 340px !important;        
-    max-width: 90% !important;     /* 確保在小手機上不超出螢幕 */
+    max-width: 90% !important;     
     padding: 12px;
     
-    /* 保持原有的黃底黑字設定 */
     background-color: #ffed4b !important; 
     color: #1a1f1a !important;            
     
@@ -93,24 +80,52 @@ main button {
 
 main h2 {
     margin-bottom: 10px; 
-    color: #fdfcfc;            /* 統一深色字 */
+    color: #fdfcfc;            
     font-size: 40px        
 }
 
+/* 核心改造：完美重現圖片中的手機版底部功能導航列 */
 footer {
-    /* 核心修改：頁尾同步變黑 */
-    background-color:#1a1f1a;
-    color:#7a8a7a;             /* 修正：深黑底配灰綠色字，低調且清晰 */
-    height:60px;
-    display:flex;
-    justify-content: center;
+    position: fixed;            /* 固定在螢幕最底部，不隨網頁滾動 */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;               /* 調整高度以容納圖標與文字 */
+    background-color: #ffffff;  /* 白色背景 */
+    border-top: 1px solid #e0e0e0; /* 頂部的淺灰色細分界線 */
+    display: flex !important;   
+    justify-content: space-around; /* 五個按鈕平均分配橫向空間 */
     align-items: center;
-    font-size: 14px;
+    z-index: 999;               /* 確保永遠在最上層 */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05); /* 微弱的上方陰影提升質感 */
+    padding-bottom: env(safe-area-inset-bottom); /* 適應 iPhone 等全面屏底部的安全區域 */
+    box-sizing: border-box;
+}
+
+/* 底部導航列中的每一個獨立按鈕按鈕（需要包裹圖標與文字） */
+footer div, footer a {
+    display: flex;
+    flex-direction: column;     /* 讓圖標在上、文字在下排列 */
+    align-items: center;
+    justify-content: center;
+    color: #333333;             /* 圖片中的深灰色字體 */
+    text-decoration: none;
+    font-size: 12px;            /* 文字大小 */
+    font-weight: 500;
+    width: 20%;                 /* 五個按鈕各佔 20% */
+    cursor: pointer;
+}
+
+/* 底部導航列中的圖標樣式設定 */
+footer img, footer i {
+    width: 28px;                /* 圖標寬度 */
+    height: 28px;               /* 圖標高度 */
+    margin-bottom: 4px;         /* 圖標與文字之間的微小間距 */
+    object-fit: contain;
 }
 
 /* 訂閱電子報區塊統一色彩 */
 .newsletter {
-    /* 核心修改：訂閱區塊也同步變黑 */
     background-color: #1a1f1a; 
     color: #ffed4b;            
     padding: 60px 0;
@@ -171,7 +186,7 @@ input:focus {
     .menu {
         display:block;
         background-color: transparent;
-        color: #ffed4b;        /* 修正：手機版選單按鈕換成耀眼黃色，在黑底上最明顯 */
+        color: #ffed4b;        
         font-size: 35px;
         position:absolute;
         top:15px;
@@ -199,7 +214,8 @@ input:focus {
     .product div {
         margin-bottom: 30px;
     }
-    img {
+    /* 修正手機版通用圖片縮放，但不影響 footer 的圖標 */
+    main img {
         max-width: 100%; 
         height: auto;    
     }
