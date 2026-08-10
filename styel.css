@@ -23,14 +23,19 @@ html, body {
 header {
     background-color: rgba(102, 196, 117, 0.452); 
     height: 80px;
-    width: 100%;       
+    width: 100% !important;  /* 確保滿版 */
     position: fixed;   
     top: 0;
-    left: 0;           
+    
+    /* 核心修正：強制將固定定位錨定在最左、最右側，不允許任何橫向偏移 */
+    left: 0 !important;           
+    right: 0 !important;
+    
     z-index: 100; 
     text-align: center;
     line-height: 80px; 
 }
+
 header h1{
     font-size: 50px
 }
