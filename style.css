@@ -57,7 +57,7 @@ header {
 header h1 {
     font-family: 'Permanent Marker', cursive !important;
     font-size: clamp(1.8rem, 5vw, 2.8rem) !important;       
-    padding-left: clamp(20px, 5vw, 80px) !important;    
+    padding-left: clamp(20px, 5vw, 60px) !important;    
     display: inline-block !important; 
     line-height: 80px !important;
     background: linear-gradient(135deg, #ffed4b 0%, #66c475 100%) !important;

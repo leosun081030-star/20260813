@@ -46,7 +46,7 @@ header h1 {
     
     /* 修正：標題文字流體化，電腦版最大 2.8rem (約45px)，手機版隨螢幕寬度自動縮小 */
     font-size: clamp(1.8rem, 5vw, 2.8rem) !important;       
-    padding-left: clamp(20px, 5vw, 80px) !important;    /* 靠左微調距離隨螢幕流動 */
+    padding-left: clamp(20px, 5vw, 60px) !important;    /* 靠左微調距離隨螢幕流動 */
     display: inline-block !important; 
     line-height: 80px !important;
 
