@@ -116,12 +116,15 @@ footer div, footer a {
     cursor: pointer;
 }
 
-/* 底部導航列中的圖標樣式設定 */
+/* 核心修正：強制固定底部導航列圖片與圖標的大小 */
 footer img, footer i {
-    width: 28px;                /* 圖標寬度 */
-    height: 28px;               /* 圖標高度 */
-    margin-bottom: 4px;         /* 圖標與文字之間的微小間距 */
-    object-fit: contain;
+    width: 26px !important;       /* 1. 強制固定寬度為 26 像素 */
+    height: 26px !important;      /* 2. 強制固定高度為 26 像素 */
+    min-width: 26px !important;   /* 3. 新增：鎖定最小寬度，防止手機版擠壓變形 */
+    min-height: 26px !important;  /* 4. 新增：鎖定最小高度 */
+    margin-bottom: 5px !important; /* 圖標與下方文字的間距 */
+    object-fit: contain !important; /* 確保圖標依比例縮放、不扁塌拉伸 */
+    display: block !important;
 }
 
 /* 訂閱電子報區塊統一色彩 */
