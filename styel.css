@@ -1,7 +1,18 @@
 * {
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
+    /* 關鍵 1：防止內襯（padding）與邊框（border）撐大原本設定的 100% 寬度 */
+    box-sizing: border-box !important; 
 }
+
+/* 關鍵 2：全域強行鎖定！命令瀏覽器只要發現有內容超出手機右側螢幕，一律自動剪裁（隱藏） */
+/* 這能瞬間斬斷所有因為隱藏元件或動畫導致的右側留白與左右晃動問題 */
+html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important; /* 核心防線：強行禁止橫向水平捲動 */
+}
+
 .center-img {
     display: block;
     margin: 40px auto 20px auto !important; 
