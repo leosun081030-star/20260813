@@ -58,7 +58,7 @@ header h1 {
     /* 1. 套用剛剛引入的 Google 藝術字體（你可以把 Permanent Marker 換成 Black Ops One 看看不同效果） */
     font-family: 'Permanent Marker', cursive !important;
     
-    font-size: 55px !important;       /* 稍微加大藝術字體 */
+    font-size: 50px !important;       /* 稍微加大藝術字體 */
     padding-left: 80px !important;    /* 保持你剛剛調整的向右微移距離 */
     display: inline-block !important; 
     line-height: 80px !important;
@@ -170,7 +170,7 @@ main button {
 main h2 {
     margin-bottom: 10px; 
     color: #fdfcfc;            
-    font-size: 40px        
+    font-size: 30px        
 }
 
 /* 核心改造：完美重現圖片中的手機版底部功能導航列 */
