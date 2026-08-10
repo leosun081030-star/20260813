@@ -19,6 +19,25 @@ html, body {
     transform: scale(1.2) !important; 
     clip-path: inset(10% 15% 23% 15% round 12px); 
 }
+/* 1. 圖片外層容器：開啟 Flexbox 並排魔法 */
+.image-row {
+    display: flex !important;
+    justify-content: center !important; /* 讓兩張圖片在網頁中間置中 */
+    gap: 15px !important;              /* 設定兩張圖片之間的左右間距 */
+    width: 340px !important;           /* 讓整組圖片寬度與你的輸入框、按鈕一模一樣長 */
+    max-width: 90% !important;         /* 確保手機版不破圖 */
+    margin: 20px auto !important;      /* 上下保留 20px 間距，並水平居中 */
+    box-sizing: border-box !important;
+}
+
+/* 2. 核心修正：強制讓內部兩張圖片大小一模一樣 */
+.image-row img {
+    /* 關鍵：利用 calc 計算，扣掉 gap 間距後，兩張圖嚴格各佔一半（50%）空間 */
+    width: calc(50% - 7.5px) !important; 
+    height: 120px !important;          /* 強制兩張圖片維持一模一樣的固定高度（數值可自由微調） */
+    object-fit: cover !important;      /* 核心：保證圖片填滿且比例不變形、不拉伸扁塌 */
+    border-radius: 8px !important;     /* 加上精緻的圓角效果 */
+}
 
 header {
     background-color: rgba(102, 196, 117, 0.452); 
@@ -80,7 +99,7 @@ main input {
     margin-right: auto !important;
     margin-bottom: 15px; 
     
-    width: 320px !important;        
+    width: 340px !important;        
     max-width: 90% !important;     
     padding: 12px;
     background-color: #ffffff; 
@@ -97,7 +116,7 @@ main button {
     margin-top: 15px !important;   
     margin-bottom: 0 !important;
     
-    width: 320px !important;        
+    width: 340px !important;        
     max-width: 90% !important;     
     padding: 12px;
     
@@ -106,14 +125,13 @@ main button {
     
     border: none;
     border-radius: 5px;
-    cursor: pointer !important;    /* 確保滑鼠移上去時一樣會出現小手圖標 */
+    cursor: pointer;
     font-size: 14px;               
     font-weight: bold;
     box-sizing: border-box;        
 }
-
 .disclaimer {
-    width: 320px !important;              /* 寬度與上方的輸入框、按鈕完全對齊 */
+    width: 340px !important;              /* 寬度與上方的輸入框、按鈕完全對齊 */
     max-width: 90% !important;           /* 確保在小手機上不超出螢幕 */
     margin: 30px auto 0 auto !important; /* 與上方按鈕拉開 30px 的舒適微距 */
     text-align: left !important;         /* 完美還原圖片中的靠左對齊 */
@@ -293,4 +311,197 @@ input:focus {
         max-width: 100%; 
         height: auto;    
     }
+}
+/* ==========================================================================
+   全新投注介面專屬樣式（重現馬會 App 核心視覺）
+   ========================================================================== */
+
+/* 1. 投注外層卡片容器 */
+.betting-card {
+    width: 340px !important;              /* 與你的輸入框、按鈕寬度嚴格對齊 */
+    max-width: 90% !important;            /* 防止手機版破圖 */
+    background-color: #232a23 !important; /* 採用略帶綠意的深灰色，與大背景區隔 */
+    border: 1px solid #334433 !important; /* 精緻的深綠色細邊框 */
+    border-radius: 12px !important;       /* 舒適的現代化圓角 */
+    padding: 16px !important;
+    margin: 20px auto !important;         /* 水平置中，上下保留間距 */
+    box-sizing: border-box !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important; /* 增加立體陰影 */
+}
+
+/* 2. 卡片頂部資訊列 */
+.bet-header {
+    display: flex !important;
+    justify-content: space-between !important; /* 左右分開對齊 */
+    align-items: center !important;
+    margin-bottom: 10px !important;
+}
+
+/* 體育項目標籤 */
+.sport-tag {
+    background-color: #66c475 !important; /* 馬會經典綠色 */
+    color: #1a1f1a !important;            /* 深色字體確保清晰度 */
+    font-size: 11px !important;
+    font-weight: bold !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+}
+
+/* 開賽時間 */
+.match-time {
+    color: #889a88 !important;            /* 低調的灰綠色時間字體 */
+    font-size: 12px !important;
+}
+
+/* 3. 賽事隊伍名稱 */
+.match-title {
+    color: #ffffff !important;            /* 純白色突出焦點 */
+    font-size: 18px !important;
+    font-weight: bold !important;
+    margin-bottom: 16px !important;
+    text-align: center !important;         /* 隊伍名稱置中對齊 */
+}
+
+/* 4. 賠率按鈕並排橫列 */
+.odds-row {
+    display: flex !important;
+    justify-content: space-between !important; /* 三個按鈕平均橫向分配 */
+    gap: 8px !important;                  /* 按鈕之間的間距 */
+    width: 100% !important;
+}
+
+/* 5. 獨立賠率按鈕設定 */
+.odds-btn {
+    display: flex !important;
+    flex-direction: column !important;     /* 強制讓「主勝」在上、「賠率」在下排列 */
+    align-items: center !important;
+    justify-content: center !important;
+    
+    width: calc(33.33% - 5.3px) !important; /* 精確計算，完美均分三等份 */
+    height: 54px !important;               /* 固定按鈕高度 */
+    background-color: #2e3b2e !important;  /* 按鈕未點擊時的暗綠色底 */
+    border: 1px solid #445544 !important;  /* 綠色細邊框 */
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    transition: all 0.2s ease !important;  /* 增加流暢的滑鼠懸停動畫 */
+}
+
+/* 賠率按鈕文字：上方標籤 */
+.odds-label {
+    color: #a0b0a0 !important;            /* 淺灰綠色文字 */
+    font-size: 11px !important;
+    margin-bottom: 2px !important;
+}
+
+/* 賠率按鈕文字：下方數字 */
+.odds-num {
+    color: #ffed4b !important;            /* 馬會經典耀眼黃色賠率數字 */
+    font-size: 15px !important;
+    font-weight: bold !important;
+}
+
+/* 6. 互動效果：當滑鼠懸停（Hover）或手指點擊時，按鈕變成高亮亮綠色 */
+.odds-btn:hover {
+    background-color: #66c475 !important;
+    border-color: #66c475 !important;
+}
+.odds-btn:hover .odds-label {
+    color: #1a1f1a !important;            /* 變色後字體自適應換成深色 */
+}
+.odds-btn:hover .odds-num {
+    color: #1a1f1a !important;
+}
+/* ==========================================================================
+   全新底部滑出投注單樣式
+   ========================================================================== */
+
+.bet-slip {
+    position: fixed !important;
+    bottom: -300px;             /* 預設藏在螢幕下方 300px 外 */
+    left: 0 !important;
+    width: 100% !important;
+    background-color: #232a23 !important; /* 深綠黑底色 */
+    border-top: 3px solid #ffed4b !important; /* 頂部黃色醒目邊框 */
+    border-radius: 16px 16px 0 0 !important; /* 上方圓角 */
+    padding: 16px !important;
+    padding-bottom: calc(75px + env(safe-area-inset-bottom)) !important; /* 確保不被底部 footer 遮擋 */
+    box-sizing: border-box !important;
+    z-index: 998 !important;    /* 層級略低於 footer (999) */
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5) !important;
+    transition: bottom 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important; /* 絲滑滑出動畫 */
+}
+
+/* 當啟用這個 class 時，投注單會向上滑出 */
+.bet-slip.active {
+    bottom: 0 !important;
+}
+
+.bet-slip-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 15px !important;
+    color: #ffed4b !important;
+}
+
+.bet-slip-header h4 {
+    font-size: 16px !important;
+    font-weight: bold !important;
+}
+
+.close-slip-btn {
+    background: none !important;
+    border: none !important;
+    color: #889a88 !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+}
+
+.bet-info {
+    background-color: #1a1f1a !important;
+    padding: 12px !important;
+    border-radius: 6px !important;
+    margin-bottom: 15px !important;
+    text-align: left !important;
+}
+
+.bet-match {
+    color: #889a88 !important;
+    font-size: 12px !important;
+    margin-bottom: 4px !important;
+}
+
+.bet-selection {
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+}
+
+.bet-input-row {
+    display: flex !important;
+    gap: 10px !important;
+    width: 100% !important;
+}
+
+#betAmount {
+    flex: 1 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #1a1f1a !important;
+    padding: 10px !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+    color: #1a1f1a !important;
+    margin: 0 !important; /* 取消先前全域的置中 */
+}
+
+.submit-bet-btn {
+    background-color: #ffed4b !important;
+    color: #1a1f1a !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
 }

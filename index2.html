@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注冊</title>
+    <!-- 引入 Google Fonts 藝術字體 -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Black+Ops+One&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+    <button class="menu">&#9776;</button>
+    <h1>WillWin</h1>
+    </header>   
+    <main>
+    <div class="image-row">
+        <img class="center-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlv7GZfrClp-DfVs5oPGZb6QPiVDzWF3zXY0HuPKmLNg&s=10">
+        <img class="center-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIbiPM0QYxuYXw91OPQEkCCZDoBJ9zyUbFZ-HZWHbD7w&s=10">
+    </div>
+    <p><h2>南韓VS捷克</h2></p>
+    <!-- 新增：賽事投注介面卡片 -->
+    <div class="betting-card">
+        <div class="bet-header">
+            <span class="sport-tag">足球</span>
+            <span class="match-time">今日 21:45</span>
+        </div>
+        <h3 class="match-title">南韓 VS 捷克</h3>
+        
+        <div class="odds-row">
+            <!-- 主隊勝按鈕 -->
+            <button class="odds-btn">
+                <span class="odds-label">主勝</span>
+                <span class="odds-num">1.85</span>
+            </button>
+            <!-- 和局按鈕 -->
+            <button class="odds-btn">
+                <span class="odds-label">和局</span>
+                <span class="odds-num">3.40</span>
+            </button>
+            <!-- 客隊勝按鈕 -->
+            <button class="odds-btn">
+                <span class="odds-label">客勝</span>
+                <span class="odds-num">4.20</span>
+            </button>
+        </div>
+    </div>
+    <div id="betSlip" class="bet-slip">
+    <div class="bet-slip-header">
+        <h4>投注單 (1)</h4>
+        <button id="closeSlipBtn" class="close-slip-btn">✕</button>
+    </div>
+    <div class="bet-slip-content">
+        <div class="bet-info">
+            <p class="bet-match">南韓 VS 捷克</p>
+            <p class="bet-selection"><span id="selectedOption">主勝</span> @ <span id="selectedOdds">1.85</span></p>
+        </div>
+        <div class="bet-input-row">
+            <input type="number" id="betAmount" placeholder="輸入投注金額" value="100">
+            <button class="submit-bet-btn">確認投注</button>
+        </div>
+        </div>
+    </div>
+
+    </main>
+    <footer>
+    <div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvts8vCGUmEYgDpc9os93spWsPM0ftdHnBVCVw9fht7Q&s" alt="賽馬">
+        <span>賽馬</span>
+    </div>
+    <div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROzkCBEgHzEAyWEGojFWP7Bu6g1OGap5STMwTgqS17jw&s=10" alt="足球">
+        <span>足球</span>
+    </div>
+    <div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI243XAdbsUgVtcYP3ASTXrjciUhtIw0yVlmVPwl1wkQ&s=10" alt="六合彩">
+        <span>六合彩</span>
+    </div>
+    <div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSow7dSOdZkGvXQVc6DfUIk-ftzCRQiV2LchS85ConZhg&s" alt="投注區">
+        <span>投注區</span>
+    </div>
+    <div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR19e1Te9MGqOUKNQdVK9GHAwrxrKAoxyaShwX2L_Hf8g&s=10" alt="我的">
+        <span>更多</span>
+    </div>
+</footer>
+<!-- 控制投注單與確認投注彈窗的 JavaScript 腳本 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const oddsButtons = document.querySelectorAll('.odds-btn');
+        const betSlip = document.getElementById('betSlip');
+        const closeSlipBtn = document.getElementById('closeSlipBtn');
+        const selectedOption = document.getElementById('selectedOption');
+        const selectedOdds = document.getElementById('selectedOdds');
+        
+        // 核心新增：抓取「確認投注」按鈕與「投注金額」輸入框
+        const submitBetBtn = document.querySelector('.submit-bet-btn');
+        const betAmountInput = document.getElementById('betAmount');
+
+        // 1. 監聽所有賠率按鈕的點擊事件（開啟投注單）
+        oddsButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const label = this.querySelector('.odds-label').innerText;
+                const odds = this.querySelector('.odds-num').innerText;
+                
+                selectedOption.innerText = label;
+                selectedOdds.innerText = odds;
+                
+                betSlip.classList.add('active');
+            });
+        });
+
+        // 2. 點擊 ✕ 按鈕時隱藏投注單
+        closeSlipBtn.addEventListener('click', function() {
+            betSlip.classList.remove('active');
+        });
+
+        // 3. 核心功能：點擊「確認投注」時彈出視窗並關閉投注單
+        if (submitBetBtn && betAmountInput) {
+            submitBetBtn.addEventListener('click', function() {
+                // 取得使用者當前輸入的金額數字
+                const amount = betAmountInput.value;
+                
+                // 防呆機制：如果沒輸入或輸入小於等於 0 的數字，給予提示
+                if (!amount || amount <= 0) {
+                    alert('請輸入有效的投注金額！');
+                    return;
+                }
+
+                // 正式彈出投注成功訊息
+                alert('你已投注 ' + amount + ' 元');
+
+                // 投注成功後，自動收回（關閉）底部的投注單
+                betSlip.classList.remove('active');
+            });
+        }
+    });
+</script>
+
+
+</body>
+</html>
