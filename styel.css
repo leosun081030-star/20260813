@@ -36,14 +36,24 @@ header {
 }
 
 header h1 {
-    font-size: 50px;
+    /* 1. 套用剛剛引入的 Google 藝術字體（你可以把 Permanent Marker 換成 Black Ops One 看看不同效果） */
+    font-family: 'Permanent Marker', cursive !important;
     
-    /* 核心修改：為標題加上左邊距，防止文字死死貼在螢幕最左邊邊緣 */
-    /* 20px 的留白在手機和電腦上看都會非常舒適、整齊 */
-    padding-left: 20px !important;
-    
-    /* 確保它是行內區塊，不會霸佔整行空間而把其他按鈕擠下去 */
+    font-size: 55px !important;       /* 稍微加大藝術字體 */
+    padding-left: 80px !important;    /* 保持你剛剛調整的向右微移距離 */
     display: inline-block !important; 
+    line-height: 80px !important;
+
+    /* 2. 核心魔法：將字體變為黃綠色漸層藝術字（呼應馬會 App 圖片風格） */
+    background: linear-gradient(135deg, #ffed4b 0%, #66c475 100%) !important;
+    -webkit-background-clip: text !important; /* 將背景色裁切鎖定在文字形狀內 */
+    -webkit-text-fill-color: transparent !important; /* 讓原本的死板單色變透明，露出底下的華麗漸層 */
+
+    /* 3. 特效點綴：加入一圈精緻的深色黑影，讓藝術字在透明 header 上立體浮出、完全不隱形 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
+    
+    /* 讓字體自帶微微傾斜的動感（可自由拔除） */
+    font-style: italic !important; 
 }
 
 main {
