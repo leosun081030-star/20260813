@@ -1,10 +1,10 @@
+@import url('https://googleapis.com');
+
 * {
     padding: 0;
     margin: 0;
-    /* 關鍵 1：防止內襯（padding）與邊框（border）撐大原本設定的 100% 寬度 */
     box-sizing: border-box !important; 
 }
-
 /* 建立全域基礎響應式字級：根字體大小在 14px 到 16px 之間隨螢幕大小流暢微調 */
 html {
     font-size: clamp(14px, 0.85rem + 0.4vw, 16px) !important;
@@ -46,7 +46,7 @@ header h1 {
     
     /* 修正：標題文字流體化，電腦版最大 2.8rem (約45px)，手機版隨螢幕寬度自動縮小 */
     font-size: clamp(1.8rem, 5vw, 2.8rem) !important;       
-    padding-left: clamp(20px, 5vw, 60px) !important;    /* 靠左微調距離隨螢幕流動 */
+    padding-left: clamp(20px, 5vw, 80px) !important;    /* 靠左微調距離隨螢幕流動 */
     display: inline-block !important; 
     line-height: 80px !important;
 
