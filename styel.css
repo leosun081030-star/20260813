@@ -24,7 +24,6 @@ html, body {
     transform: scale(1.2) !important; 
     clip-path: inset(10% 15% 23% 15% round 12px); 
 }
-
 header {
     background-color: rgba(102, 196, 117, 0.452); 
     height: 80px;
@@ -35,30 +34,25 @@ header {
     right: 0 !important;
     z-index: 100; 
     
-    /* 修正：將原本的 center 改為 left，讓內部的文字預設靠左排列 */
-    text-align: left !important;
+    text-align: left !important; /* 電腦版預設靠左排列 */
     line-height: 80px; 
 }
 
 header h1 {
-    /* 1. 套用剛剛引入的 Google 藝術字體（你可以把 Permanent Marker 換成 Black Ops One 看看不同效果） */
     font-family: 'Permanent Marker', cursive !important;
-    
-    /* 修正：標題文字流體化，電腦版最大 2.8rem (約45px)，手機版隨螢幕寬度自動縮小 */
     font-size: clamp(1.8rem, 5vw, 2.8rem) !important;       
-    padding-left: clamp(20px, 5vw, 80px) !important;    /* 靠左微調距離隨螢幕流動 */
+    
+    /* 點綴：電腦版保留優雅的左側舒適留白間距 */
+    padding-left: clamp(20px, 5vw, 80px) !important;    
     display: inline-block !important; 
     line-height: 80px !important;
 
-    /* 2. 核心魔法：將字體變為黃綠色漸層藝術字（呼應馬會 App 圖片風格） */
+    /* 漸層藝術字核心魔法 */
     background: linear-gradient(135deg, #ffed4b 0%, #66c475 100%) !important;
-    -webkit-background-clip: text !important; /* 將背景色裁切鎖定在文字形狀內 */
-    -webkit-text-fill-color: transparent !important; /* 讓原本的死板單色變透明，露出底下的華麗漸層 */
+    -webkit-background-clip: text !important; 
+    -webkit-text-fill-color: transparent !important; 
 
-    /* 3. 特效點綴：加入一圈精緻的深色黑影，讓藝術字在透明 header 上立體浮出、完全不隱形 */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
-    
-    /* 讓字體自帶微微傾斜的動感（可自由拔除） */
     font-style: italic !important; 
 }
 
@@ -255,53 +249,48 @@ input:focus {
 
 /* 響應式設計語法 */
 @media screen and (max-width: 768px) {
-    header ul {
-        display:none;
+    /* 兼顧手機版關鍵 1：命令外框容器將內部的 inline-block 元件（h1）轉為水平居中 */
+    header { 
+        text-align: center !important; 
     }
+
+    header ul { 
+        display: none; 
+    }
+    
     header h1 {
         position: relative;
-        display: inline-block;
-        /* 手機版「WillWin」藝術字大小，與螢幕寬度更彈性契合 */
+        display: inline-block !important;
         font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
-        color: #232d29;        
+        
+        /* 兼顧手機版關鍵 2：將電腦版設定的左留白強制歸零！否則置中時會往右偏歪 */
+        padding-left: 0 !important; 
+        
+        /* 兼顧手機版關鍵 3：在手機端也必須強制補回漸層與透明填充，防止變回死板暗色 */
+        background: linear-gradient(135deg, #ffed4b 0%, #66c475 100%) !important;
+        -webkit-background-clip: text !important; 
+        -webkit-text-fill-color: transparent !important; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
     }
-    .news h2 {
-        font-size: 2.2rem !important; /* 修改為相對字級縮放 */
-    }
+
+    /* 以下保持您原本設定好的其餘手機版版面樣式 */
+    .news h2 { font-size: 2.2rem !important; }
     .menu {
-        display:block;
+        display: block;
         background-color: transparent;
         color: #ffed4b;        
-        font-size: 32px; /* 稍微縮小手機選單圖標 */
-        position:absolute;
-        top:15px;
-        left:20px;
-        border:none;
+        font-size: 32px;
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        border: none;
         cursor: pointer;
     }
-    .shop {
-        flex-direction: column;
-    }
-    .shop img {
-        width:100%;
-    }
-    .info {
-        width:100%;
-        padding:40px 0;
-    }
-    .info h2 {
-        font-size: 1.8rem !important; /* 修改為相對字級縮放 */
-    }
-    .product {
-        flex-direction: column;
-        padding: 60px 0;
-    }
-    .product div {
-        margin-bottom: 30px;
-    }
-    /* 修正手機版通用圖片縮放，但不影響 footer 的圖標 */
-    main img {
-        max-width: 100%; 
-        height: auto;    
-    }
+    .shop { flex-direction: column; }
+    .shop img { width: 100%; }
+    .info { width: 100%; padding: 40px 0; }
+    .info h2 { font-size: 1.8rem !important; }
+    .product { flex-direction: column; padding: 60px 0; }
+    .product div { margin-bottom: 30px; }
+    main img { max-width: 100%; height: auto; }
 }

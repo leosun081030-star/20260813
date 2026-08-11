@@ -51,19 +51,25 @@ header {
     left: 0 !important;           
     right: 0 !important;
     z-index: 100; 
-    text-align: left !important;
+    
+    text-align: left !important; /* 電腦版預設靠左排列 */
     line-height: 80px; 
 }
 
 header h1 {
     font-family: 'Permanent Marker', cursive !important;
     font-size: clamp(1.8rem, 5vw, 2.8rem) !important;       
+    
+    /* 點綴：電腦版保留優雅的左側舒適留白間距 */
     padding-left: clamp(20px, 5vw, 80px) !important;    
     display: inline-block !important; 
     line-height: 80px !important;
+
+    /* 漸層藝術字核心魔法 */
     background: linear-gradient(135deg, #ffed4b 0%, #66c475 100%) !important;
     -webkit-background-clip: text !important; 
     -webkit-text-fill-color: transparent !important; 
+
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
     font-style: italic !important; 
 }
@@ -244,13 +250,31 @@ input:focus { outline: none; border-color: #232d29; }
 }
 
 @media screen and (max-width: 768px) {
-    header ul { display: none; }
+    /* 兼顧手機版關鍵 1：命令外框容器將內部的 inline-block 元件（h1）轉為水平居中 */
+    header { 
+        text-align: center !important; 
+    }
+
+    header ul { 
+        display: none; 
+    }
+    
     header h1 {
         position: relative;
-        display: inline-block;
+        display: inline-block !important;
         font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
-        color: #232d29;        
+        
+        /* 兼顧手機版關鍵 2：將電腦版設定的左留白強制歸零！否則置中時會往右偏歪 */
+        padding-left: 0 !important; 
+        
+        /* 兼顧手機版關鍵 3：在手機端也必須強制補回漸層與透明填充，防止變回死板暗色 */
+        background: linear-gradient(135deg, #ffed4b 0%, #66c475 100%) !important;
+        -webkit-background-clip: text !important; 
+        -webkit-text-fill-color: transparent !important; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
     }
+
+    /* 以下保持您原本設定好的其餘手機版版面樣式 */
     .news h2 { font-size: 2.2rem !important; }
     .menu {
         display: block;
@@ -271,7 +295,6 @@ input:focus { outline: none; border-color: #232d29; }
     .product div { margin-bottom: 30px; }
     main img { max-width: 100%; height: auto; }
 }
-
 .betting-card {
     width: 340px !important;              
     max-width: 90% !important;            
