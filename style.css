@@ -22,7 +22,7 @@ html, body {
     display: block;
     margin: 40px auto 20px auto !important; 
     transform: scale(1.2) !important; 
-    clip-path: inset(10% 15% 23% 15% round 12px); 
+    clip-path: inset(10% 10% 10% 10% round 12px); 
 }
 
 .image-row {
